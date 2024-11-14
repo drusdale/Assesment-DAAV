@@ -7,24 +7,35 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 
-# Load the raw data (ensure you have the correct path for the RData file)
+# Load the data
 load("RawData/OSF_WFH.RData")
+df = OSF_WFH
 
-data_frame <- OSF_WFH
+# Drop rows with NA values
+nna_df = df %>% drop_na()
 
-# Columns to keep for analysis
-columns_to_keep <- c("Single-item Scale Productivity Home", "Single-item Scale Work Satisfaction Home", 
-                     "Ventilation Cat", "Home Office Light", 
+# Display the first few rows of the data
+head(nna_df)
+
+# Define the columns to keep
+columns_to_keep <- c("Single-item Scale Productivity Home", "Single-item Scale Work Satisfaction Home",
+                     "Ventilation Cat", "Home Office Light", "Where Work?", "Childern Home during Office Hours", "Partner Home during Office Hours",
                      "Pet - Dog", "Pet - Cat", "geslacht")
 
-# Filter and rename columns, removing rows with any NA values
-filtered_data <- data_frame %>%
+# Define the columns to keep after mutation
+columns_to_keep_after_mutation <- c("Productivity", "Satisfaction", "High Ventilation", "Medium Ventilation", "Low Ventilation",
+                                    "Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light",
+                                    "Dog", "No Dog", "Cat", "No Cat", "Partner Always Home", "Partner Sometimes Home",
+                                    "Partner Never Home", "No Partner", "Children Always Home", "Children Sometimes Home",
+                                    "Children Never Home", "No Children", "WFH Partically", "WFH Exclusively")
+
+# Select and mutate the data
+nna_df <- nna_df %>%
   select(all_of(columns_to_keep)) %>%
   rename(
-    Productivity = `Single-item Scale Productivity Home`,
-    Satisfaction = `Single-item Scale Work Satisfaction Home`
+    Productivity = "Single-item Scale Productivity Home",
+    Satisfaction = "Single-item Scale Work Satisfaction Home",
   ) %>%
-  # Create binary columns for 'Dog', 'Cat', and Ventilation
   mutate(
     `High Ventilation` = case_when(
       `Ventilation Cat` == "High Ventilation" ~ 1,
@@ -73,62 +84,106 @@ filtered_data <- data_frame %>%
     `Female` = case_when(
       `geslacht` == 'Female' ~ 1,
       TRUE ~ 0
+    ),
+    `Partner Always Home` = case_when(
+      `Partner Home during Office Hours` == 'Always' ~ 1,
+      TRUE ~ 0
+    ),
+    `Partner Sometimes Home` = case_when(
+      `Partner Home during Office Hours` == 'Sometimes' ~ 1,
+      TRUE ~ 0
+    ),
+    `Partner Never Home` = case_when(
+      `Partner Home during Office Hours` == 'Never' ~ 1,
+      TRUE ~ 0
+    ),
+    `No Partner` = case_when(
+      `Partner Home during Office Hours` == 'No Partner' ~ 1,
+      TRUE ~ 0
+    ),
+    `Children Always Home` = case_when(
+      `Childern Home during Office Hours` == 'Always' ~ 1,
+      TRUE ~ 0
+    ),
+    `Children Sometimes Home` = case_when(
+      `Childern Home during Office Hours` == 'Sometimes' ~ 1,
+      TRUE ~ 0
+    ),
+    `Children Never Home` = case_when(
+      `Childern Home during Office Hours` == 'Never' ~ 1,
+      TRUE ~ 0
+    ),
+    `No Children` = case_when(
+      `Partner Home during Office Hours` == 'No Children' ~ 1,
+      TRUE ~ 0
+    ),
+    `WFH Partically` = case_when(
+      `Where Work?` == 'Partially Work' ~ 1,
+      TRUE ~ 0
+    ),
+    `WFH Exclusively` = case_when(
+      `Where Work?` == 'Exclusively Home' ~ 1,
+      TRUE ~ 0
     )
   ) %>%
-  drop_na()
+  select(all_of(columns_to_keep_after_mutation))
 
-# Create a data frame to hold the calculated results
-calculated_data <- data.frame()
+# Create bar data for the overall graph
+cols <- columns_to_keep_after_mutation[3:length(columns_to_keep_after_mutation)]
+bar_data <- data.frame()
 
-# Loop over columns to calculate means
-for (col in colnames(filtered_data)) {
-  calculated_output <- filtered_data %>%
-    group_by(across(all_of(col))) %>%
+for (col in cols) {
+  temp <- nna_df %>%
+    group_by(!!sym(col)) %>%
     summarise(
-      mean_productivity = mean(Productivity),
-      mean_satisfaction = mean(Satisfaction)
+      Satisfaction = mean(Satisfaction, na.rm = TRUE),
+      Productivity = mean(Productivity, na.rm = TRUE)
     ) %>%
-    ungroup()
+    pivot_longer(cols = c(Satisfaction, Productivity), names_to = "Metric", values_to = "Value") %>%
+    mutate(Variable = col)
   
-  # Add the column name as a variable in the output
-  calculated_output$variable <- col
-  
-  # Rename the dynamically grouped column to "value" for easier reading
-  colnames(calculated_output)[1] <- "value"
-  
-  # Convert 'value' column to character to avoid type mismatch in bind_rows()
-  calculated_output$value <- as.character(calculated_output$value)
-  
-  # Combine the results
-  calculated_data <- bind_rows(calculated_data, calculated_output)
+  bar_data <- bind_rows(bar_data, temp)
 }
 
-# Reshaping the data for dual-axis plotting with a new name for the reshaped column
-calculated_data_long <- calculated_data %>%
-  pivot_longer(cols = c(mean_productivity, mean_satisfaction),
-               names_to = "measure", values_to = "score") %>%
-  mutate(measure = factor(measure, levels = c("mean_productivity", "mean_satisfaction"), 
-                          labels = c("Productivity", "Satisfaction")))
+# Define the order of variables
+variable_order <- c("High Ventilation", "Medium Ventilation", "Low Ventilation",
+                    "Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light",
+                    "Dog", "No Dog", "Cat", "No Cat", "Partner Always Home", "Partner Sometimes Home",
+                    "Partner Never Home", "No Partner", "Children Always Home", "Children Sometimes Home",
+                    "Children Never Home", "No Children", "WFH Partically", "WFH Exclusively")
 
-# Specify the order of the variables in the legend
-var_order <- c("High Ventilation", "Medium Ventilation", "Low Ventilation",
-               "Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light",
-               "Dog", "No Dog", "Cat", "No Cat", "Male", "Female")
+bar_data$Variable <- factor(bar_data$Variable, levels = variable_order)
 
-# Create a bar chart with both Productivity and Satisfaction scores
-ggplot(calculated_data_long, aes(x = score, y = measure, fill = factor(variable, levels = var_order))) +
-  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
-  scale_y_discrete(name = "Measure") +
-  scale_x_continuous(
-    name = "Score",
-    breaks = seq(1, 10, 1),
-    limits = c(0, 10)
-  ) +
-  scale_fill_discrete(name = "Variable") +
+# Create the overall graph
+overall_plot <- ggplot(bar_data, aes(x = Variable, y = Value, fill = Metric)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Satisfaction and Productivity per Variable", x = "Variable", y = "Value") +
   theme_minimal() +
-  labs(
-    title = "Productivity and Work Satisfaction by Variable",
-    x = "Score",
-    y = "Measure"
-  ) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  coord_flip()
+
+# Save the overall graph
+dir.create("Graphs", showWarnings = FALSE)
+ggsave("Graphs/overall_plot.png", plot = overall_plot, width = 10, height = 8)
+
+# Define the categories and their corresponding variables
+categories <- list(
+  Ventilation = c("High Ventilation", "Medium Ventilation", "Low Ventilation"),
+  Light = c("Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light"),
+  Pets = c("Dog", "No Dog", "Cat", "No Cat"),
+  Partner = c("Partner Always Home", "Partner Sometimes Home", "Partner Never Home", "No Partner"),
+  Children = c("Children Always Home", "Children Sometimes Home", "Children Never Home", "No Children")
+)
+
+# Create and save individual graphs for each category
+for (category in names(categories)) {
+  category_vars <- categories[[category]]
+  category_data <- bar_data %>% filter(Variable %in% category_vars)
+  
+  category_plot <- ggplot(category_data, aes(x = Variable, y = Value, fill = Metric)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    labs(title = paste("Satisfaction and Productivity per", category), x = "Variable", y = "Value") +
+    theme_minimal() +
+    coord_flip()
+  
+  ggsave(paste0("Graphs/", category, "_plot.png"), plot = category_plot, width = 10, height = 8)
+}
