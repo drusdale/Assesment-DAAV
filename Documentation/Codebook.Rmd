@@ -1,3 +1,17 @@
+---
+title: "Codebook"
+author: "Daisy Rusdale"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Work From Home Environmental Factors Analysis
 
 ## Project Overview
@@ -62,7 +76,7 @@ Note: `geslacht` translates to `gender`
 
 ## Project Structure
 
-```
+```         
 ├── Assesment-DAAV.Rproj
 ├── RawData/
 │   └── OSF_WFH.RData

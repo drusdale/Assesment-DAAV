@@ -1,14 +1,11 @@
-# Load required libraries for data manipulation and visualization
-install.packages("tidyverse")
-install.packages("dplyr")
-install.packages("ggplot2")
-
-library(tidyverse)  # Collection of data science packages
-library(dplyr)      # Data manipulation functions
-library(ggplot2)    # Creating visualizations
-
-# Import the Work From Home dataset from RData file
+# Init.R must be run first to initialise packages
+# Import the Work From Home dataset from a local RData file
 load("RawData/OSF_WFH.RData")
+
+# Alternativly; Import the Work From Home dataset from a remote RData file
+#raw_data_url = "https://raw.githubusercontent.com/drusdale/Assesment-DAAV/refs/heads/main/RawData/OSF_WFH.RData"
+#load(url(raw_data_url))
+
 df = OSF_WFH
 
 # Remove any rows with missing values to ensure data quality
