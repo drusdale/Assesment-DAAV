@@ -418,26 +418,38 @@ directory</a> containing the following variables:</p>
 </div>
 <div id="project-structure" class="section level2">
 <h2>Project Structure</h2>
-<pre><code>├── Assesment-DAAV.Rproj
-├── RawData/
-│   └── OSF_WFH.RData
+<pre><code>├── .Rprofile
+├── .gitignore
+├── analysis_script.R
+├── Assesment-DAAV.Rproj
+├── Documentation/
+│   ├── Graphs/
+│   ├── Codebook.html
+│   └── Codebook.Rmd
 ├── Graphs/
 │   ├── overall_plot.png
 │   └── [category]_plot.png
-├── analysis_script.R
-├── Init.R
-├── Setup.R
 ├── LICENSE
-├── .Rprofile
-├── .gitignore
-└── README.md</code></pre>
+├── RawData/
+│   └── OSF_WFH.RData
+├── README.md
+├── renv/
+│   ├── .gitignore
+│   ├── activate.R
+│   └── settings.json
+├── renv.lock
+└── Setup.R</code></pre>
 </div>
 <div id="data-processing" class="section level2">
 <h2>Data Processing</h2>
 <p>The script performs the following data transformations: 1. Removes
-rows with missing values 2. Creates binary indicators for each
-environmental factor 3. Calculates mean productivity and satisfaction
-scores for each factor 4. Transforms data for visualisation purposes</p>
+rows with missing values</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Creates binary indicators for each environmental factor</p></li>
+<li><p>Calculates mean productivity and satisfaction scores for each
+factor</p></li>
+<li><p>Transforms data for visualisation purposes</p></li>
+</ol>
 </div>
 <div id="generated-variables" class="section level2">
 <h2>Generated Variables</h2>

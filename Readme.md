@@ -65,27 +65,40 @@ Note: `geslacht` translates to `gender`
 ## Project Structure
 
 ```         
+├── .Rprofile
+├── .gitignore
+├── analysis_script.R
 ├── Assesment-DAAV.Rproj
-├── RawData/
-│   └── OSF_WFH.RData
+├── Documentation/
+│   ├── Graphs/
+│   ├── Codebook.html
+│   └── Codebook.Rmd
 ├── Graphs/
 │   ├── overall_plot.png
 │   └── [category]_plot.png
-├── analysis_script.R
-├── Init.R
-├── Setup.R
 ├── LICENSE
-├── .Rprofile
-├── .gitignore
-└── README.md
+├── RawData/
+│   └── OSF_WFH.RData
+├── README.md
+├── renv/
+│   ├── .gitignore
+│   ├── activate.R
+│   └── settings.json
+├── renv.lock
+└── Setup.R
 ```
 
 ## Data Processing
 
-The script performs the following data transformations: 1. Removes rows
-with missing values 2. Creates binary indicators for each environmental
-factor 3. Calculates mean productivity and satisfaction scores for each
-factor 4. Transforms data for visualisation purposes
+The script performs the following data transformations: 
+1. Removes rows with missing values
+
+2. Creates binary indicators for each environmental factor
+
+3. Calculates mean productivity and satisfaction scores for each factor
+
+4. Transforms data for visualisation purposes
+
 
 ## Generated Variables
 
@@ -172,7 +185,4 @@ CC-By Attribution-NonCommercial-NoDerivatives 4.0 International
 
 ## References
 
-1.  Stroom M, Kok N. Does working from home work? That depends on the
-    home! [Internet]. OSF; 2023. Available from:
-    [osf.io/h6j3f](https://osf.io/h6j3f). \# Work From Home
-    Environmental Factors Analysis
+1.  Stroom M, Kok N. Does working from home work? That depends on the home! [Internet]. OSF; 2023. Available from: [osf.io/h6j3f](https://osf.io/h6j3f). \# Work From Home Environmental Factors Analysis
