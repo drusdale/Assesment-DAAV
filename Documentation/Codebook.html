@@ -397,11 +397,19 @@ using Packrat.</p>
 <h3>Data Requirements</h3>
 <p>The script expects an RData file (<code>OSF_WFH.RData</code>) in the
 <a href="https://github.com/drusdale/Assesment-DAAV/tree/main/RawData">RawData
-directory</a> containing the following variables: - Single-item Scale
-Productivity Home - Single-item Scale Work Satisfaction Home -
-Ventilation Cat - Home Office Light - Where Work? - Children Home during
-Office Hours - Partner Home during Office Hours - Pet - Dog - Pet - Cat
-- geslacht</p>
+directory</a> containing the following variables:</p>
+<ul>
+<li><p>Single-item Scale Productivity Home</p></li>
+<li><p>Single-item Scale Work Satisfaction Home</p></li>
+<li><p>Ventilation Cat</p></li>
+<li><p>Home Office Light</p></li>
+<li><p>Where Work?</p></li>
+<li><p>Children Home during Office Hours</p></li>
+<li><p>Partner Home during Office Hours</p></li>
+<li><p>Pet - Dog</p></li>
+<li><p>Pet - Cat</p></li>
+<li><p>geslacht</p></li>
+</ul>
 <p>Note: <code>geslacht</code> translates to <code>gender</code></p>
 </div>
 </div>
@@ -430,11 +438,16 @@ scores for each factor 4. Transforms data for visualisation purposes</p>
 </div>
 <div id="generated-variables" class="section level2">
 <h2>Generated Variables</h2>
-<p>The script creates binary (0/1) indicators for: - Ventilation levels
-(High, Medium, Low) - Home office lighting (Natural, Average, No
-Natural) - Pet presence (Dog, Cat) - Partner presence during office
-hours - Children presence during office hours - Work from home status
-(Partial, Exclusive) - Gender (Male, Female)</p>
+<p>The script creates binary (0/1) indicators for:</p>
+<ul>
+<li><p>Ventilation levels (High, Medium, Low)</p></li>
+<li><p>Home office lighting (Natural, Average, No Natural)</p></li>
+<li><p>Pet presence (Dog, Cat)</p></li>
+<li><p>Partner presence during office hours</p></li>
+<li><p>Children presence during office hours</p></li>
+<li><p>Work from home status (Partial, Exclusive)</p></li>
+<li><p>Gender (Male, Female)</p></li>
+</ul>
 </div>
 <div id="visualisations" class="section level2">
 <h2>Visualisations</h2>
@@ -505,9 +518,10 @@ missing values</li>
 </div>
 <div id="contributing" class="section level2">
 <h2>Contributing</h2>
-<p>To contribute to this analysis: 1. Fork the repository 2. Create a
-feature branch 3. Submit a pull request with a clear description of
-changes</p>
+<p>To contribute to this analysis:</p>
+<p>1. Fork the repository</p>
+<p>2. Create a feature branch</p>
+<p>3. Submit a pull request with a clear description of changes</p>
 </div>
 <div id="license" class="section level2">
 <h2>License</h2>
@@ -519,172 +533,6 @@ changes</p>
 <li>Stroom M, Kok N. Does working from home work? That depends on the
 home! [Internet]. OSF; 2023. Available from: <a href="https://osf.io/h6j3f">osf.io/h6j3f</a>. # Work From Home
 Environmental Factors Analysis</li>
-</ol>
-</div>
-<div id="project-overview-1" class="section level2">
-<h2>Project Overview</h2>
-<p>This project analyses how various environmental factors affect
-productivity and satisfaction when working from home. The analysis
-examines multiple factors including ventilation, lighting, presence of
-pets, family members, and work arrangements. The analysis is performed
-using R and the results are visualised through various plots.</p>
-</div>
-<div id="prerequisites-1" class="section level2">
-<h2>Prerequisites</h2>
-<div id="required-r-packages-1" class="section level3">
-<h3>Required R Packages</h3>
-<ul>
-<li><a href="https://cran.r-project.org/package=tidyverse">tidyverse</a>
-(for data manipulation and visualisation)</li>
-<li><a href="https://cran.r-project.org/package=dplyr">dplyr</a> (for
-data transformation)</li>
-<li><a href="https://cran.r-project.org/package=ggplot2">ggplot2</a>
-(for creating plots)</li>
-<li><a href="https://cran.r-project.org/package=farver">farver</a> (for
-colour manipulation in ggplot2)</li>
-<li><a href="https://cran.r-project.org/package=scales">scales</a>
-(often needed with ggplot2)</li>
-<li><a href="https://cran.r-project.org/package=lifecycle">lifecycle</a>
-(for handling deprecated features)</li>
-</ul>
-<p>Install the required packages by running the <code>Init.R</code>
-script to initialise the environment and install the required packages
-using Packrat.</p>
-<ol style="list-style-type: decimal">
-<li>Open the <code>Init.R</code> script in R or RStudio</li>
-<li>Run the script to install the required packages</li>
-</ol>
-</div>
-<div id="data-requirements-1" class="section level3">
-<h3>Data Requirements</h3>
-<ul>
-<li>Single-item Scale Productivity Home</li>
-<li>Single-item Scale Work Satisfaction Home</li>
-<li>Ventilation Cat</li>
-<li>Home Office Light</li>
-<li>Where Work?</li>
-<li>Children Home during Office Hours</li>
-<li>Partner Home during Office Hours</li>
-<li>Pet - Dog</li>
-<li>Pet - Cat</li>
-<li>geslacht</li>
-</ul>
-<p>Note: <code>geslacht</code> translates to <code>gender</code></p>
-</div>
-</div>
-<div id="project-structure-1" class="section level2">
-<h2>Project Structure</h2>
-<pre><code>├── Assesment-DAAV.Rproj
-├── RawData/
-│   └── OSF_WFH.RData
-├── Graphs/
-│   ├── overall_plot.png
-│   └── [category]_plot.png
-├── analysis_script.R
-├── Init.R
-├── Setup.R
-├── LICENSE
-├── .Rprofile
-├── .gitignore
-└── README.md</code></pre>
-</div>
-<div id="data-processing-1" class="section level2">
-<h2>Data Processing</h2>
-<p>The script performs the following data transformations: 1. Removes
-rows with missing values 2. Creates binary indicators for each
-environmental factor 3. Calculates mean productivity and satisfaction
-scores for each factor 4. Transforms data for visualisation purposes</p>
-</div>
-<div id="generated-variables-1" class="section level2">
-<h2>Generated Variables</h2>
-<p>The script creates binary (0/1) indicators for: - Ventilation levels
-(High, Medium, Low) - Home office lighting (Natural, Average, No
-Natural) - Pet presence (Dog, Cat) - Partner presence during office
-hours - Children presence during office hours - Work from home status
-(Partial, Exclusive) - Gender (Male, Female)</p>
-</div>
-<div id="visualisations-1" class="section level2">
-<h2>Visualisations</h2>
-<p>The script generates two types of plots:</p>
-<div id="overall-plot-1" class="section level3">
-<h3>Overall Plot</h3>
-<ul>
-<li>Comprehensive visualisation showing all environmental factors</li>
-<li>Displays both productivity and satisfaction metrics</li>
-<li>Saved as <code>overall_plot.png</code></li>
-</ul>
-</div>
-<div id="category-specific-plots-1" class="section level3">
-<h3>Category-Specific Plots</h3>
-<ul>
-<li>Individual plots for each category of factors</li>
-<li>Allows detailed examination of specific environmental aspects</li>
-<li>Saved as separate PNG files in the Graphs directory</li>
-</ul>
-</div>
-</div>
-<div id="output-1" class="section level2">
-<h2>Output</h2>
-<p>All visualisations are saved in the <code>Graphs</code> directory
-with the following specifications: - Format: PNG - Dimensions: 10 x 8
-inches - White background - Flipped coordinates for better readability -
-Colour scheme: Pink (Productivity) and White (Satisfaction)</p>
-</div>
-<div id="scale-information-1" class="section level2">
-<h2>Scale Information</h2>
-<ul>
-<li>Both productivity and satisfaction are measured on a scale from 0 to
-10</li>
-<li>All visualisations maintain consistent scaling for comparison
-purposes</li>
-</ul>
-</div>
-<div id="usage-1" class="section level2">
-<h2>Usage</h2>
-<ol style="list-style-type: decimal">
-<li>Ensure all required packages are installed</li>
-<li>Run the <code>Init.R</code> script to initialise the
-environment</li>
-<li>Run the <code>analysis_script.R</code> script in R or RStudio</li>
-<li>Check the <code>Graphs</code> directory for generated
-visualisations</li>
-</ol>
-</div>
-<div id="data-interpretation-1" class="section level2">
-<h2>Data Interpretation</h2>
-<ul>
-<li>Bar lengths represent mean values for each factor</li>
-<li>Higher values indicate better productivity/satisfaction</li>
-<li>Each factor is shown with both productivity and satisfaction
-measures for easy comparison</li>
-<li>Factors are grouped logically for easier interpretation</li>
-</ul>
-</div>
-<div id="notes-1" class="section level2">
-<h2>Notes</h2>
-<ul>
-<li>The script automatically creates the <code>Graphs</code> directory
-if it doesn’t exist</li>
-<li>Missing values are removed to ensure data quality</li>
-<li>All calculations use NA-safe functions to handle any remaining
-missing values</li>
-</ul>
-</div>
-<div id="contributing-1" class="section level2">
-<h2>Contributing</h2>
-<p>To contribute to this analysis: 1. Fork the repository 2. Create a
-feature branch 3. Submit a pull request with a clear description of
-changes</p>
-</div>
-<div id="license-1" class="section level2">
-<h2>License</h2>
-<p>CC-By Attribution-NonCommercial-NoDerivatives 4.0 International</p>
-</div>
-<div id="references-1" class="section level2">
-<h2>References</h2>
-<ol style="list-style-type: decimal">
-<li>Stroom M, Kok N. Does working from home work? That depends on the
-home! [Internet]. OSF; 2023. Available from: <a href="https://osf.io/h6j3f">osf.io/h6j3f</a>.</li>
 </ol>
 </div>
 </div>

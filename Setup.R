@@ -1,26 +1,11 @@
-# Initialise packrat for the project
-if (!require("packrat")) install.packages("packrat")
-packrat::init()
+# setup.R
+install.packages("renv")
+
+# Initialize renv for the project
+renv::init()
 
 # Install required packages
-# Packrat will track these installations
-install.packages(c(
-  "tidyverse",   # Collection of data science packages
-  "dplyr",       # Data manipulation functions
-  "ggplot2",     # Creating visualizations
-  "farver",      # Required for color manipulation in ggplot2
-  "scales",      # Often needed with ggplot2
-  "lifecycle"    # For handling deprecated features
-))
+renv::install(c("tidyr", "dplyr", "ggplot2"))
 
-# Take a snapshot of the current state
-packrat::snapshot()
-
-# Create .Rprofile to ensure packrat is used
-cat('
-# Load packrat
-if (requireNamespace("packrat", quietly = TRUE)) {
-  message("Loading packrat...")
-  packrat::on()
-}
-', file = ".Rprofile")
+# Snapshot the current project library
+renv::snapshot(type = "explicit")

@@ -1,4 +1,35 @@
-# Init.R must be run first to initialise packages
+# Restore packages from renv.lock
+renv::restore()
+renv::install()
+
+# Load required packages
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Function to load data from local file or GitHub
+load_data <- function(local_path, github_url) {
+  # Check if local file exists
+  if (file.exists(local_path)) {
+    cat("Loading data from local file:", local_path, "\n")
+    load(local_path)
+  } else {
+    cat("Local file not found. Downloading from GitHub:", github_url, "\n")
+    
+    # Ensure RawData directory exists
+    if (!dir.exists(dirname(local_path))) {
+      dir.create(dirname(local_path), recursive = TRUE)
+    }
+    
+    # Download file from GitHub
+    download.file(github_url, local_path, mode = "wb")
+    
+    # Load the downloaded file
+    load(local_path)
+  }
+}
+
+
 # Import the Work From Home dataset from a local RData file
 load("RawData/OSF_WFH.RData")
 
@@ -12,6 +43,7 @@ df = OSF_WFH
 nna_df = df %>% drop_na()
 
 # Display sample data for initial inspection
+# (Sanity check)
 head(nna_df)
 
 # Define relevant variables for analysis
@@ -21,7 +53,7 @@ columns_to_keep <- c("Single-item Scale Productivity Home", "Single-item Scale W
                      "Pet - Dog", "Pet - Cat", "geslacht")
 
 # Define output variables after data transformation
-# These will be binary (0/1) indicators for each category
+# These will be binary (0/1) indicators for each category - any column not in the vector will be removed
 columns_to_keep_after_mutation <- c("Productivity", "Satisfaction", "High Ventilation", "Medium Ventilation", "Low Ventilation",
                                     "Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light",
                                     "Dog at home", "No Dog at home", "Cat at home", "No Cat at home", "Partner Always Home", "Partner Sometimes Home",
@@ -37,7 +69,7 @@ nna_df <- nna_df %>%
     Productivity = "Single-item Scale Productivity Home",
     Satisfaction = "Single-item Scale Work Satisfaction Home",
   ) %>%
-  # Create binary indicators for each category
+  # Create binary indicators for each category - for example,"Male" = 1, "Female" = 0
   mutate(
     # Gender indicators
     Male = case_when(
@@ -152,7 +184,7 @@ nna_df <- nna_df %>%
 cols <- columns_to_keep_after_mutation[3:length(columns_to_keep_after_mutation)]
 bar_data <- data.frame()
 
-# Loop through each factor and calculate metrics
+# Loop through each factor and calculate metrics - loops over columns, calculates the mean and organises variable values
 for (col in cols) {
   temp <- nna_df %>%
     group_by(!!sym(col)) %>%
@@ -169,7 +201,7 @@ for (col in cols) {
   bar_data <- bind_rows(bar_data, temp)
 }
 
-# Define the order of variables for consistent visualization
+# Define the order of variables for consistent visualisation
 variable_order <- c("High Ventilation", "Medium Ventilation", "Low Ventilation",
                     "Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light",
                     "Dog at home", "No Dog at home", "Cat at home", "No Cat at home", "Partner Always Home", "Partner Sometimes Home",
@@ -181,8 +213,8 @@ bar_data$Variable <- factor(bar_data$Variable, levels = variable_order)
 
 # Create main visualization
 overall_plot <- ggplot(bar_data, aes(x = Variable, y = Value, fill = Metric)) +
-  geom_bar(stat = "identity", position = position_dodge2(preserve = "single"), size = 0.5, color = "black") +
-  scale_fill_manual(values = c("Productivity" = "pink", "Satisfaction" = "white")) +
+  geom_bar(stat = "identity", position = position_dodge2(preserve = "single"), linewidth = 0.5, color = "black") +
+  scale_fill_manual(values = c("Productivity" = "#FF4B4B", "Satisfaction" = "#4B96FF")) +
   labs(title = "How do environmental factors affect Productivity and Satisfaction when working from home", 
        x = "Variable", y = "Value") +
   theme_minimal(base_size = 15) +
@@ -218,8 +250,8 @@ for (category in names(categories)) {
   
   # Create category-specific plot
   category_plot <- ggplot(category_data, aes(x = Variable, y = Value, fill = Metric)) +
-    geom_bar(stat = "identity", position = position_dodge2(preserve = "single"), size = 0.5, color = "black") +
-    scale_fill_manual(values = c("Productivity" = "pink", "Satisfaction" = "white")) +
+    geom_bar(stat = "identity", position = position_dodge2(preserve = "single"), linewidth = 0.5, color = "black") +
+    scale_fill_manual(values = c("Productivity" = "#FF4B4B", "Satisfaction" = "#4B96FF")) +
     labs(title = category_titles[[category]], x = "Variable", y = "Value") +
     theme_minimal(base_size = 15) +
     theme(

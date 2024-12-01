@@ -4,5 +4,4 @@
 .Rhistory
 .RData
 .Ruserdata
-packrat/lib*/
-packrat/src/
+./Graphs/*.png
