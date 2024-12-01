@@ -5,7 +5,8 @@ install.packages("renv")
 renv::init()
 
 # Install required packages
-renv::install(c("tidyr", "dplyr", "ggplot2"))
+requried_packages = c("tidyr", "dplyr", "ggplot2")
+renv::install(requried_packages)
 
 # Snapshot the current project library
-renv::snapshot()
+renv::snapshot(packages = requried_packages)

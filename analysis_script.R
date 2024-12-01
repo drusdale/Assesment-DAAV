@@ -1,6 +1,6 @@
 # Restore packages from renv.lock
 renv::restore()
-renv::install()
+renv::status()
 
 # Load required packages
 library(tidyr)
@@ -248,7 +248,7 @@ categories <- list(
   Light = c("Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light"),
   Pets = c("Dog", "No Dog", "Cat", "No Cat"),
   Partner = c("Partner Always Home", "Partner Sometimes Home", "Partner Never Home", "No Partner"),
-  Children = c("Children Always Home", "Children Sometimes Home", "Children Never Home", "No Children")
+  Children = c("Children Always Home", "Children Sometimes Home", "Children Never Home", "No Children"),
   Gender = c("Male", "Female")
 )
 
