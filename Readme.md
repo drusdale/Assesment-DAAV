@@ -12,25 +12,27 @@ using R and the results are visualised through various plots.
 
 ### Required R Packages
 
--   [tidyverse](https://cran.r-project.org/package=tidyverse) (for data
-    manipulation and visualisation)
--   [dplyr](https://cran.r-project.org/package=dplyr) (for data
-    transformation)
--   [ggplot2](https://cran.r-project.org/package=ggplot2) (for creating
-    plots)
--   [farver](https://cran.r-project.org/package=farver) (for colour
-    manipulation in ggplot2)
--   [scales](https://cran.r-project.org/package=scales) (often needed
-    with ggplot2)
--   [lifecycle](https://cran.r-project.org/package=lifecycle) (for
-    handling deprecated features)
+-   [tidyr [1.3.1]](https://cran.r-project.org/package=tidyr) (Tools to
+    help to create tidy data, where each column is a variable, each row
+    is an observation, and each cell contains a single value. 'tidyr'
+    contains tools for changing the shape (pivoting) and hierarchy
+    (nesting and 'unnesting') of a dataset, turning deeply nested lists
+    into rectangular data frames ('rectangling'), and extracting values
+    out of string columns. It also includes tools for working with
+    missing values (both implicit and explicit).)
+-   [dplyr [1.1.4]](https://cran.r-project.org/package=dplyr) (A fast,
+    consistent tool for working with data frame like objects, both in
+    memory and out of memory.)
+-   [ggplot2 [3.5.1]](https://cran.r-project.org/package=ggplot2) (A
+    system for 'declaratively' creating graphics, based on "The Grammar
+    of Graphics". You provide the data, tell 'ggplot2' how to map
+    variables to aesthetics, what graphical primitives to use, and it
+    takes care of the details.)
 
-Install the required packages by running the `Init.R` script to
-initialise the environment and install the required packages using
-Packrat.
-
-1.  Open the `Init.R` script in R or RStudio
-2.  Run the script to install the required packages
+> Note: This project was initially built using Packrat, but this has
+> been removed in favour of using the `renv` package to manage
+> dependencies since the deprecation of Packrat - [Read more
+> here](https://cran.r-project.org/web/packages/packrat/readme/README.html).
 
 ### Data Requirements
 
@@ -62,7 +64,7 @@ Note: `geslacht` translates to `gender`
 
 ## Project Structure
 
-```
+```         
 ├── Assesment-DAAV.Rproj
 ├── RawData/
 │   └── OSF_WFH.RData
@@ -135,10 +137,8 @@ scheme: Pink (Productivity) and White (Satisfaction)
 
 ## Usage
 
-1.  Ensure all required packages are installed
-2.  Run the `Init.R` script to initialise the environment
-3.  Run the `analysis_script.R` script in R or RStudio
-4.  Check the `Graphs` directory for generated visualisations
+1.  Run the `analysis_script.R` script in R or RStudio
+2.  Check the `Graphs` directory for generated visualisations
 
 ## Data Interpretation
 
