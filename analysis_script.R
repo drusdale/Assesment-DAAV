@@ -1,49 +1,34 @@
+# analysis_script.R
+# This script loads the required packages and data, performs data transformation, and generates visualisations
+
 # Restore packages from renv.lock
 renv::restore()
-renv::status()
 
 # Load required packages
 library(tidyr)
 library(dplyr)
 library(ggplot2)
 
-# Function to load data from local file or GitHub
-load_data <- function(local_path, github_url) {
-  # Check if local file exists
-  if (file.exists(local_path)) {
-    cat("Loading data from local file:", local_path, "\n")
-    load(local_path)
-  } else {
-    cat("Local file not found. Downloading from GitHub:", github_url, "\n")
-    
-    # Ensure RawData directory exists
-    if (!dir.exists(dirname(local_path))) {
-      dir.create(dirname(local_path), recursive = TRUE)
-    }
-    
-    # Download file from GitHub
-    download.file(github_url, local_path, mode = "wb")
-    
-    # Load the downloaded file
-    load(local_path)
-  }
+if (!dir.exists("RawData")) {
+  stop("RawData directory was not found. Please ensure it exist and contains the OSF_WFH.RData file.");
 }
 
+if (!file.exists("RawData/OSF_WFH.RData")) {
+  # Available to download here - https://raw.githubusercontent.com/drusdale/Assesment-DAAV/refs/heads/main/RawData/OSF_WFH.RData
+  stop("OSF_WFH.RData was not found in RawData. Please ensure it exists and is placed in the RawData directory.");
+}
 
-# Import the Work From Home dataset from a local RData file
+# Load the dataset
 load("RawData/OSF_WFH.RData")
 
-# Alternativly; Import the Work From Home dataset from a remote RData file
-#raw_data_url = "https://raw.githubusercontent.com/drusdale/Assesment-DAAV/refs/heads/main/RawData/OSF_WFH.RData"
-#load(url(raw_data_url))
-
+# Assign the dataset to a variable
 df = OSF_WFH
 
 # Remove any rows with missing values to ensure data quality
 nna_df = df %>% drop_na()
 
 # Display sample data for initial inspection
-# (Sanity check)
+#(Sanity check)
 head(nna_df)
 
 # Define relevant variables for analysis
@@ -179,6 +164,10 @@ nna_df <- nna_df %>%
   # Keep only the transformed columns
   select(all_of(columns_to_keep_after_mutation))
 
+# Display sample data for initial inspection
+#(Sanity check)
+head(nna_df)
+
 # Prepare data for visualization
 # Calculate mean productivity and satisfaction for each factor
 cols <- columns_to_keep_after_mutation[3:length(columns_to_keep_after_mutation)]
@@ -211,6 +200,10 @@ variable_order <- c("High Ventilation", "Medium Ventilation", "Low Ventilation",
 # Convert Variable to factor with specified order
 bar_data$Variable <- factor(bar_data$Variable, levels = variable_order)
 
+# Display sample data for initial inspection
+#(Sanity check)
+head(bar_data)
+
 # Create main visualization
 overall_plot <- ggplot(bar_data, aes(x = Variable, y = Value, fill = Metric)) +
   geom_bar(stat = "identity", position = position_dodge2(preserve = "single"), linewidth = 0.5, color = "black") +
@@ -242,7 +235,7 @@ print(overall_plot)
 dir.create("Graphs", showWarnings = FALSE)
 ggsave("Graphs/overall_plot.png", plot = overall_plot, width = 10, height = 8)
 
-# Define the categories and their corresponding variables
+ # Define the categories and their corresponding variables
 categories <- list(
   Ventilation = c("High Ventilation", "Medium Ventilation", "Low Ventilation"),
   Light = c("Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light"),
@@ -290,6 +283,8 @@ for (category in names(categories)) {
     coord_flip() +
     scale_y_continuous(limits = c(0, 10), breaks = 0:40)
   
+  # Display the plot
+  print(category_plot)
   # Save category plot
   ggsave(paste0("Graphs/", category, "_plot.png"), plot = category_plot, width = 10, height = 8)
 }
