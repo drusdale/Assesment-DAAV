@@ -2,6 +2,8 @@
 # This script loads the required packages and data, performs data transformation, and generates visualisations
 
 # Restore packages from renv.lock (lockfile)
+# Sometimes this process will prompt you to accept when installing packages, you will need to press ENTER and accept the defaults.
+# During the install process R will sometimes require a restart - this will mean you will need to run the script again.
 renv::restore()
 
 # Load required packages
