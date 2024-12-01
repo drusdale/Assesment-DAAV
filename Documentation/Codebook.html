@@ -365,34 +365,41 @@ display: none;
 productivity and satisfaction when working from home. The analysis
 examines multiple factors including ventilation, lighting, presence of
 pets, family members, and work arrangements. The analysis is performed
-using R and the results are visualised through various plots.</p>
+using R and the results are visualised through various graphs.</p>
 </div>
 <div id="prerequisites" class="section level2">
 <h2>Prerequisites</h2>
 <div id="required-r-packages" class="section level3">
 <h3>Required R Packages</h3>
 <ul>
-<li><a href="https://cran.r-project.org/package=tidyr">tidyr [1.3.1]</a>
-(Tools to help to create tidy data, where each column is a variable,
-each row is an observation, and each cell contains a single value.
-‘tidyr’ contains tools for changing the shape (pivoting) and hierarchy
-(nesting and ‘unnesting’) of a dataset, turning deeply nested lists into
-rectangular data frames (‘rectangling’), and extracting values out of
-string columns. It also includes tools for working with missing values
-(both implicit and explicit).)</li>
-<li><a href="https://cran.r-project.org/package=dplyr">dplyr [1.1.4]</a>
-(A fast, consistent tool for working with data frame like objects, both
-in memory and out of memory.)</li>
+<li><a href="https://cran.r-project.org/package=tidyr">tidyr
+[v1.3.1]</a> (Tools to help to create tidy data, where each column is a
+variable, each row is an observation, and each cell contains a single
+value. ‘tidyr’ contains tools for changing the shape (pivoting) and
+hierarchy (nesting and ‘unnesting’) of a dataset, turning deeply nested
+lists into rectangular data frames (‘rectangling’), and extracting
+values out of string columns. It also includes tools for working with
+missing values (both implicit and explicit).)</li>
+<li><a href="https://cran.r-project.org/package=dplyr">dplyr
+[v1.1.4]</a> (A fast, consistent tool for working with data frame like
+objects, both in memory and out of memory.)</li>
 <li><a href="https://cran.r-project.org/package=ggplot2">ggplot2
-[3.5.1]</a> (A system for ‘declaratively’ creating graphics, based on
+[v3.5.1]</a> (A system for ‘declaratively’ creating graphics, based on
 “The Grammar of Graphics”. You provide the data, tell ‘ggplot2’ how to
 map variables to aesthetics, what graphical primitives to use, and it
 takes care of the details.)</li>
+<li><a href="https://cran.r-project.org/package=renv">renv [v1.0.11]</a>
+(A dependency management toolkit for R. Using ‘renv’, you can create and
+manage project-local R libraries, save the state of these libraries to a
+‘lockfile’, and later restore your library as required. Together, these
+tools can help make your projects more isolated, portable, and
+reproducible.)</li>
 </ul>
 <blockquote>
 <p>Note: This project was initially built using Packrat, but this has
 been removed in favour of using the <code>renv</code> package to manage
-dependencies since the deprecation of Packrat - <a href="https://cran.r-project.org/web/packages/packrat/readme/README.html">Read
+dependencies since the deprecation (no longer supported by the
+developer) of Packrat - <a href="https://cran.r-project.org/web/packages/packrat/readme/README.html">Read
 more here</a>.</p>
 </blockquote>
 </div>
@@ -400,7 +407,9 @@ more here</a>.</p>
 <h3>Data Requirements</h3>
 <p>The script expects an RData file (<code>OSF_WFH.RData</code>) in the
 <a href="https://github.com/drusdale/Assesment-DAAV/tree/main/RawData">RawData
-directory</a> containing the following variables:</p>
+directory</a> containing the following variables (OSF_WFH.RData contains
+the full version of the raw data, however for the purpose of this script
+only a handful were selected).</p>
 <ul>
 <li><p>Single-item Scale Productivity Home</p></li>
 <li><p>Single-item Scale Work Satisfaction Home</p></li>
@@ -413,15 +422,16 @@ directory</a> containing the following variables:</p>
 <li><p>Pet - Cat</p></li>
 <li><p>geslacht</p></li>
 </ul>
-<p>Note: <code>geslacht</code> translates to <code>gender</code></p>
+<p>Note: <code>geslacht</code> translates to <code>gender</code> in
+English.</p>
 </div>
 </div>
 <div id="project-structure" class="section level2">
 <h2>Project Structure</h2>
-<pre><code>├── .Rprofile
-├── .gitignore
+<pre><code>├── .gitignore
+├── .Rprofile
 ├── analysis_script.R
-├── Assesment-DAAV.Rproj
+├── assesment_DAAV.Rproj
 ├── Documentation/
 │   ├── Graphs/
 │   ├── Codebook.html
@@ -442,9 +452,9 @@ directory</a> containing the following variables:</p>
 </div>
 <div id="data-processing" class="section level2">
 <h2>Data Processing</h2>
-<p>The script performs the following data transformations: 1. Removes
-rows with missing values</p>
-<ol start="2" style="list-style-type: decimal">
+<p>The script performs the following data transformations:</p>
+<ol style="list-style-type: decimal">
+<li><p>Removes rows with missing values</p></li>
 <li><p>Creates binary indicators for each environmental factor</p></li>
 <li><p>Calculates mean productivity and satisfaction scores for each
 factor</p></li>
@@ -486,10 +496,16 @@ factor</p></li>
 </div>
 <div id="output" class="section level2">
 <h2>Output</h2>
-<p>All visualisations are saved in the <code>Graphs</code> directory
-with the following specifications: - Format: PNG - Dimensions: 10 x 8
-inches - White background - Flipped coordinates for better readability -
-Colour scheme: Pink (Productivity) and White (Satisfaction)</p>
+<p>All graphs are saved in the <code>Graphs</code> directory with the
+following specifications:</p>
+<ul>
+<li><p>Format: PNG</p></li>
+<li><p>Dimensions: 10 x 8 inches</p></li>
+<li><p>White background</p></li>
+<li><p>Flipped coordinates for better readability</p></li>
+<li><p>Colour scheme: Red (Productivity) and Blue
+(Satisfaction)</p></li>
+</ul>
 </div>
 <div id="scale-information" class="section level2">
 <h2>Scale Information</h2>
@@ -524,8 +540,8 @@ measures for easy comparison</li>
 <li>The script automatically creates the <code>Graphs</code> directory
 if it doesn’t exist</li>
 <li>Missing values are removed to ensure data quality</li>
-<li>All calculations use NA-safe functions to handle any remaining
-missing values</li>
+<li>All calculations use NA-safe functions (If a function returns null
+then it removed it) to handle any remaining missing values</li>
 </ul>
 </div>
 <div id="contributing" class="section level2">

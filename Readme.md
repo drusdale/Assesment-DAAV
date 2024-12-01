@@ -6,13 +6,13 @@ This project analyses how various environmental factors affect
 productivity and satisfaction when working from home. The analysis
 examines multiple factors including ventilation, lighting, presence of
 pets, family members, and work arrangements. The analysis is performed
-using R and the results are visualised through various plots.
+using R and the results are visualised through various graphs.
 
 ## Prerequisites
 
 ### Required R Packages
 
--   [tidyr [1.3.1]](https://cran.r-project.org/package=tidyr) (Tools to
+-   [tidyr [v1.3.1]](https://cran.r-project.org/package=tidyr) (Tools to
     help to create tidy data, where each column is a variable, each row
     is an observation, and each cell contains a single value. 'tidyr'
     contains tools for changing the shape (pivoting) and hierarchy
@@ -20,25 +20,34 @@ using R and the results are visualised through various plots.
     into rectangular data frames ('rectangling'), and extracting values
     out of string columns. It also includes tools for working with
     missing values (both implicit and explicit).)
--   [dplyr [1.1.4]](https://cran.r-project.org/package=dplyr) (A fast,
+-   [dplyr [v1.1.4]](https://cran.r-project.org/package=dplyr) (A fast,
     consistent tool for working with data frame like objects, both in
     memory and out of memory.)
--   [ggplot2 [3.5.1]](https://cran.r-project.org/package=ggplot2) (A
+-   [ggplot2 [v3.5.1]](https://cran.r-project.org/package=ggplot2) (A
     system for 'declaratively' creating graphics, based on "The Grammar
     of Graphics". You provide the data, tell 'ggplot2' how to map
     variables to aesthetics, what graphical primitives to use, and it
     takes care of the details.)
+-   [renv [v1.0.11]](https://cran.r-project.org/package=renv) (A
+    dependency management toolkit for R. Using 'renv', you can create
+    and manage project-local R libraries, save the state of these
+    libraries to a 'lockfile', and later restore your library as
+    required. Together, these tools can help make your projects more
+    isolated, portable, and reproducible.)
 
 > Note: This project was initially built using Packrat, but this has
 > been removed in favour of using the `renv` package to manage
-> dependencies since the deprecation of Packrat - [Read more
+> dependencies since the deprecation (no longer supported by the
+> developer) of Packrat - [Read more
 > here](https://cran.r-project.org/web/packages/packrat/readme/README.html).
 
 ### Data Requirements
 
 The script expects an RData file (`OSF_WFH.RData`) in the [RawData
 directory](https://github.com/drusdale/Assesment-DAAV/tree/main/RawData)
-containing the following variables:
+containing the following variables (OSF_WFH.RData contains the full
+version of the raw data, however for the purpose of this script only a
+handful were selected).
 
 -   Single-item Scale Productivity Home
 
@@ -60,15 +69,15 @@ containing the following variables:
 
 -   geslacht
 
-Note: `geslacht` translates to `gender`
+Note: `geslacht` translates to `gender` in English.
 
 ## Project Structure
 
 ```         
-├── .Rprofile
 ├── .gitignore
+├── .Rprofile
 ├── analysis_script.R
-├── Assesment-DAAV.Rproj
+├── assesment_DAAV.Rproj
 ├── Documentation/
 │   ├── Graphs/
 │   ├── Codebook.html
@@ -90,15 +99,15 @@ Note: `geslacht` translates to `gender`
 
 ## Data Processing
 
-The script performs the following data transformations: 
-1. Removes rows with missing values
+The script performs the following data transformations:
 
-2. Creates binary indicators for each environmental factor
+ 1. Removes rows with missing values
 
-3. Calculates mean productivity and satisfaction scores for each factor
+2.  Creates binary indicators for each environmental factor
 
-4. Transforms data for visualisation purposes
+3.  Calculates mean productivity and satisfaction scores for each factor
 
+4.  Transforms data for visualisation purposes
 
 ## Generated Variables
 
@@ -136,10 +145,18 @@ The script generates two types of plots:
 
 ## Output
 
-All visualisations are saved in the `Graphs` directory with the
-following specifications: - Format: PNG - Dimensions: 10 x 8 inches -
-White background - Flipped coordinates for better readability - Colour
-scheme: Pink (Productivity) and White (Satisfaction)
+All graphs are saved in the `Graphs` directory with the following
+specifications:
+
+-   Format: PNG
+
+-   Dimensions: 10 x 8 inches
+
+-   White background
+
+-   Flipped coordinates for better readability
+
+-    Colour scheme: Red (Productivity) and Blue (Satisfaction)
 
 ## Scale Information
 
@@ -166,8 +183,8 @@ scheme: Pink (Productivity) and White (Satisfaction)
 -   The script automatically creates the `Graphs` directory if it
     doesn't exist
 -   Missing values are removed to ensure data quality
--   All calculations use NA-safe functions to handle any remaining
-    missing values
+-   All calculations use NA-safe functions (If a function returns null
+    then it removed it) to handle any remaining missing values
 
 ## Contributing
 
@@ -185,4 +202,7 @@ CC-By Attribution-NonCommercial-NoDerivatives 4.0 International
 
 ## References
 
-1.  Stroom M, Kok N. Does working from home work? That depends on the home! [Internet]. OSF; 2023. Available from: [osf.io/h6j3f](https://osf.io/h6j3f). \# Work From Home Environmental Factors Analysis
+1.  Stroom M, Kok N. Does working from home work? That depends on the
+    home! [Internet]. OSF; 2023. Available from:
+    [osf.io/h6j3f](https://osf.io/h6j3f). \# Work From Home
+    Environmental Factors Analysis

@@ -11,5 +11,5 @@ renv::init()
 requried_packages = c("tidyr", "dplyr", "ggplot2")
 renv::install(requried_packages)
 
-# Snapshot the current project library (creates a lockfile)
+# Snapshot the current project library (creates a lockfile - stores what version of the package you are using is so it can be reinstalled later)
 renv::snapshot(packages = requried_packages)

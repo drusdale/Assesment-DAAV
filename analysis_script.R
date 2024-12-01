@@ -1,7 +1,7 @@
 # analysis_script.R
 # This script loads the required packages and data, performs data transformation, and generates visualisations
 
-# Restore packages from renv.lock
+# Restore packages from renv.lock (lockfile)
 renv::restore()
 
 # Load required packages
@@ -9,10 +9,14 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 
+# Checking if directory raw data exists prior
+# (Sanity check)
 if (!dir.exists("RawData")) {
   stop("RawData directory was not found. Please ensure it exist and contains the OSF_WFH.RData file.");
 }
 
+# Checking if the data file exists on machine prior
+# (Sanity check)
 if (!file.exists("RawData/OSF_WFH.RData")) {
   # Available to download here - https://raw.githubusercontent.com/drusdale/Assesment-DAAV/refs/heads/main/RawData/OSF_WFH.RData
   stop("OSF_WFH.RData was not found in RawData. Please ensure it exists and is placed in the RawData directory.");
@@ -197,11 +201,11 @@ variable_order <- c("High Ventilation", "Medium Ventilation", "Low Ventilation",
                     "Partner Never Home", "No Partner", "Children Always Home", "Children Sometimes Home",
                     "Children Never Home", "No Children", "WFH Partically", "WFH Exclusively", "Female","Male")
 
-# Convert Variable to factor with specified order
+# Convert Variable to factor with specified order (taken the bar data and reordered it)
 bar_data$Variable <- factor(bar_data$Variable, levels = variable_order)
 
 # Display sample data for initial inspection
-#(Sanity check)
+# (Sanity check)
 head(bar_data)
 
 # Create main visualization
@@ -225,27 +229,28 @@ overall_plot <- ggplot(bar_data, aes(x = Variable, y = Value, fill = Metric)) +
       margin = margin(b = 20) # Adds some space below the title
     )
   ) +
-  coord_flip() +
-  scale_y_continuous(limits = c(0, 10), breaks = 0:40)
+  coord_flip() + # Swaps X and Y as the bars needed to be horizontal not verticle
+  scale_y_continuous(limits = c(0, 10), breaks = 0:40) # Adds additional background lines for easier visualistaion
 
 # Display the plot
 print(overall_plot)
 
-# Create output directory and save main plot
+# Create output directory and save main plot (Creating the directory for the graphs to be stored in)
 dir.create("Graphs", showWarnings = FALSE)
 ggsave("Graphs/overall_plot.png", plot = overall_plot, width = 10, height = 8)
 
- # Define the categories and their corresponding variables
+ # Define the categories and their corresponding variables (Each catagory will generate a spearate graph)
 categories <- list(
   Ventilation = c("High Ventilation", "Medium Ventilation", "Low Ventilation"),
   Light = c("Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light"),
-  Pets = c("Dog", "No Dog", "Cat", "No Cat"),
+  Pets = c("Dog at home", "No Dog at home", "Cat at home", "No Cat at home"),
   Partner = c("Partner Always Home", "Partner Sometimes Home", "Partner Never Home", "No Partner"),
   Children = c("Children Always Home", "Children Sometimes Home", "Children Never Home", "No Children"),
   Gender = c("Male", "Female")
 )
 
-category_titles <- list(
+# Title for each catagory
+category_titles <- list( 
   Ventilation = "How does ventilation affect Satisfaction and Productivity?",
   Light = "How does lighting affect Satisfaction and Productivity?",
   Pets = "How do pets affect Satisfaction and Productivity?",
