@@ -242,6 +242,25 @@ print(overall_plot)
 dir.create("Graphs", showWarnings = FALSE)
 ggsave("Graphs/overall_plot.png", plot = overall_plot, width = 10, height = 8)
 
+# Define the categories and their corresponding variables
+categories <- list(
+  Ventilation = c("High Ventilation", "Medium Ventilation", "Low Ventilation"),
+  Light = c("Natural Home Office Light", "Average Home Office Light", "No Natural Home Office Light"),
+  Pets = c("Dog", "No Dog", "Cat", "No Cat"),
+  Partner = c("Partner Always Home", "Partner Sometimes Home", "Partner Never Home", "No Partner"),
+  Children = c("Children Always Home", "Children Sometimes Home", "Children Never Home", "No Children")
+  Gender = c("Male", "Female")
+)
+
+category_titles <- list(
+  Ventilation = "How does ventilation affect Satisfaction and Productivity?",
+  Light = "How does lighting affect Satisfaction and Productivity?",
+  Pets = "How do pets affect Satisfaction and Productivity?",
+  Partner = "How does partner presence affect Satisfaction and Productivity?",
+  Children = "How do children affect Satisfaction and Productivity?",
+  Gender = "How does gender affect Satisfaction and Productivity?"
+)
+
 # Generate and save individual category plots
 for (category in names(categories)) {
   # Filter data for current category
