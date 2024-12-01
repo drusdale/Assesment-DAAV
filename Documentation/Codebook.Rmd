@@ -2,7 +2,11 @@
 title: "Codebook"
 author: "Daisy Rusdale"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+    html_document:
+        theme: minimal
+        toc: true
+        toc_depth: 3
 editor_options: 
   markdown: 
     wrap: 72
