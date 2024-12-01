@@ -11,7 +11,7 @@
 
 <meta name="author" content="Daisy Rusdale" />
 
-<meta name="date" content="2024-11-15" />
+<meta name="date" content="2024-12-01" />
 
 <title>Codebook</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Codebook</h1>
 <h4 class="author">Daisy Rusdale</h4>
-<h4 class="date">2024-11-15</h4>
+<h4 class="date">2024-12-01</h4>
 
 </div>
 
@@ -372,26 +372,29 @@ using R and the results are visualised through various plots.</p>
 <div id="required-r-packages" class="section level3">
 <h3>Required R Packages</h3>
 <ul>
-<li><a href="https://cran.r-project.org/package=tidyverse">tidyverse</a>
-(for data manipulation and visualisation)</li>
-<li><a href="https://cran.r-project.org/package=dplyr">dplyr</a> (for
-data transformation)</li>
-<li><a href="https://cran.r-project.org/package=ggplot2">ggplot2</a>
-(for creating plots)</li>
-<li><a href="https://cran.r-project.org/package=farver">farver</a> (for
-colour manipulation in ggplot2)</li>
-<li><a href="https://cran.r-project.org/package=scales">scales</a>
-(often needed with ggplot2)</li>
-<li><a href="https://cran.r-project.org/package=lifecycle">lifecycle</a>
-(for handling deprecated features)</li>
+<li><a href="https://cran.r-project.org/package=tidyr">tidyr [1.3.1]</a>
+(Tools to help to create tidy data, where each column is a variable,
+each row is an observation, and each cell contains a single value.
+‘tidyr’ contains tools for changing the shape (pivoting) and hierarchy
+(nesting and ‘unnesting’) of a dataset, turning deeply nested lists into
+rectangular data frames (‘rectangling’), and extracting values out of
+string columns. It also includes tools for working with missing values
+(both implicit and explicit).)</li>
+<li><a href="https://cran.r-project.org/package=dplyr">dplyr [1.1.4]</a>
+(A fast, consistent tool for working with data frame like objects, both
+in memory and out of memory.)</li>
+<li><a href="https://cran.r-project.org/package=ggplot2">ggplot2
+[3.5.1]</a> (A system for ‘declaratively’ creating graphics, based on
+“The Grammar of Graphics”. You provide the data, tell ‘ggplot2’ how to
+map variables to aesthetics, what graphical primitives to use, and it
+takes care of the details.)</li>
 </ul>
-<p>Install the required packages by running the <code>Init.R</code>
-script to initialise the environment and install the required packages
-using Packrat.</p>
-<ol style="list-style-type: decimal">
-<li>Open the <code>Init.R</code> script in R or RStudio</li>
-<li>Run the script to install the required packages</li>
-</ol>
+<blockquote>
+<p>Note: This project was initially built using Packrat, but this has
+been removed in favour of using the <code>renv</code> package to manage
+dependencies since the deprecation of Packrat - <a href="https://cran.r-project.org/web/packages/packrat/readme/README.html">Read
+more here</a>.</p>
+</blockquote>
 </div>
 <div id="data-requirements" class="section level3">
 <h3>Data Requirements</h3>
@@ -488,9 +491,6 @@ purposes</li>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <ol style="list-style-type: decimal">
-<li>Ensure all required packages are installed</li>
-<li>Run the <code>Init.R</code> script to initialise the
-environment</li>
 <li>Run the <code>analysis_script.R</code> script in R or RStudio</li>
 <li>Check the <code>Graphs</code> directory for generated
 visualisations</li>

@@ -8,4 +8,4 @@ renv::init()
 renv::install(c("tidyr", "dplyr", "ggplot2"))
 
 # Snapshot the current project library
-renv::snapshot(type = "explicit")
+renv::snapshot()
